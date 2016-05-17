@@ -21,6 +21,9 @@
 					http_only 	= false     :: boolean()
 } ).
 
+-type cookie() :: #cookie{}.
+-export_type( [cookie/0] ).
+
 %%
 %%  Accessors
 %%

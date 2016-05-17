@@ -1,0 +1,14 @@
+{application, cookie,
+ [
+  {description, "An Erlang cookie library"},
+  {vsn, "1"},
+  {modules, [
+             cookie
+            ]},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {env, []}
+ ]}.

@@ -35,3 +35,29 @@ Http 	= cookie:http_only( Cookie1 ),	%% true
 Serialized 	= cookie:serialize( [ Cookie1, Cookie2 ] ).	%% cookie1=hello; cookie2=world 
 
 ```
+
+### Deserialize
+
+Deserializes a list of cookies from a given proplist containing header key-value pairs. Set-Cookie headers are matched and
+their values are parsed in order to generate cookie structures.
+
+```erlang
+cookie:deserialize( [ { HeaderKey :: binary(), HeaderValue :: binary() } ] ) -> { ok, [ Cookie ] } | { error, Reason }.
+```
+
+### Serialize
+
+Serializes a list of cookies into a form suitable for inclusion in request headers
+
+```erlang
+cookie:serialize( [ Cookie ] ) -> Serialized :: binary()
+```
+
+### Merge
+
+Given a set of cookies received from a new request, merge their values into an old set of cookies, overwriting any
+cookies in the old list with matching names.
+
+```erlang
+cookie:merge( OldCookies :: [ Cookie ], NewCookies :: [ Cookie ] ) -> [ Cookie ].
+```

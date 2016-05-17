@@ -4,7 +4,7 @@
 %% Accessors
 -export( [name/1, value/1, expires/1, expired/1, max_age/1, secure/1, path/1, domain/1, http_only/1] ).
 %% Serialization
--export( [deserialize/1, serialize/1] ).
+-export( [deserialize/1, serialize/1, merge/2] ).
 
 -type timestamp() :: integer().
 
@@ -130,3 +130,11 @@ deserialize( [], Out ) ->
 serialize( Cookies ) ->
     want:binary( string:join( [ string:join( [  want:string( Name ), 
                                                 want:string( Value ) ], "=" ) || #cookie{ name = Name, value = Value } <- Cookies ], "; " ) ).
+                      
+%%
+%%  Merge a new set of cookies into an old one, overwriting any cookies with matching names in the old set. 
+%%
+-spec merge( [#cookie{}], [#cookie{}] ) -> [#cookie{}].
+merge( Old, New ) ->
+    Sort = fun( A, B ) -> want:string( name( A ) ) =< want:string( name( B ) ) end,
+    lists:usort( Sort, lists:merge( Sort, lists:sort( Sort, New ), lists:sort( Sort, Old ) ) ).    
